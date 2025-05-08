@@ -12,6 +12,8 @@ from .serializers import (
     UserSerializer, UserRegistrationSerializer, LeaveTypeSerializer,
     LeaveRequestSerializer, LeaveBalanceSerializer
 )
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 User = get_user_model()
 
@@ -65,7 +67,10 @@ def welcome(request):
             'pending_leave_requests': pending_leave_requests,
             'employees': employees,
         })
-    return render(request, 'base.html')
+    elif user.is_authenticated:
+        return redirect('employee_dashboard')
+    else:
+        return render(request, 'base.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -238,3 +243,90 @@ class LeaveBalanceViewSet(viewsets.ReadOnlyModelViewSet):
         if user.is_admin:
             return LeaveBalance.objects.all()
         return LeaveBalance.objects.filter(user=user)
+
+def employee_dashboard(request):
+    user = request.user
+    if not user.is_authenticated or getattr(user, 'is_admin', False):
+        return redirect('login')
+
+    # Leave Balances
+    leave_balances = [
+        {
+            'leave_type': lb.leave_type.name,
+            'balance': lb.total_days - lb.used_days,
+            'max_days': lb.total_days,
+        }
+        for lb in LeaveBalance.objects.filter(user=user)
+    ]
+
+    # Leave History
+    leave_history = [
+        {
+            'leave_type': lr.leave_type.name,
+            'start_date': lr.start_date.strftime('%Y-%m-%d'),
+            'end_date': lr.end_date.strftime('%Y-%m-%d'),
+            'status': lr.status,
+            'reason': lr.reason,
+        }
+        for lr in LeaveRequest.objects.filter(user=user).order_by('-start_date')
+    ]
+
+    # Leave Types for the form
+    leave_types = LeaveType.objects.all()
+
+    return render(request, 'employee_dashboard.html', {
+        'leave_balances': leave_balances,
+        'leave_history': leave_history,
+        'leave_types': leave_types,
+        'user': user,
+    })
+
+@csrf_exempt
+def submit_leave_request(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        leave_type_id = request.POST.get('leave_type')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        reason = request.POST.get('reason')
+
+        leave_type = get_object_or_404(LeaveType, id=leave_type_id)
+        LeaveRequest.objects.create(
+            user=request.user,
+            leave_type=leave_type,
+            start_date=start_date,
+            end_date=end_date,
+            reason=reason,
+            status='pending'
+        )
+        messages.success(request, 'Leave request submitted!')
+    return redirect('employee_dashboard')
+
+@require_POST
+def approve_leave_request(request, leave_id):
+    if not request.user.is_authenticated or not getattr(request.user, 'is_admin', False):
+        return redirect('login')
+    leave_request = get_object_or_404(LeaveRequest, id=leave_id)
+    if leave_request.status == 'pending':
+        leave_request.status = 'approved'
+        leave_request.save()
+        # Update leave balance
+        leave_balance = LeaveBalance.objects.get(
+            user=leave_request.user,
+            leave_type=leave_request.leave_type,
+            year=leave_request.start_date.year
+        )
+        leave_balance.used_days += 1
+        leave_balance.save()
+        messages.success(request, 'Leave request approved.')
+    return redirect('welcome')
+
+@require_POST
+def reject_leave_request(request, leave_id):
+    if not request.user.is_authenticated or not getattr(request.user, 'is_admin', False):
+        return redirect('login')
+    leave_request = get_object_or_404(LeaveRequest, id=leave_id)
+    if leave_request.status == 'pending':
+        leave_request.status = 'rejected'
+        leave_request.save()
+        messages.success(request, 'Leave request rejected.')
+    return redirect('welcome')

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2025 at 07:15 AM
+-- Generation Time: May 08, 2025 at 02:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -199,7 +199,7 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('ggo3wyydq35i7fsnvdaqnyuzfkrvwpuq', '.eJxVjEEOwiAQRe_C2hAZoO24dO8ZmoEZpGogKe3KeHdD0oVu_3vvv9VM-5bnvck6L6wuCtTpdwsUn1I64AeVe9Wxlm1dgu6KPmjTt8ryuh7u30Gmlnst0-A9oiGPgew0AiMDcDTC4rwNMqLFZIODcxoogQso0TJEb5JNTn2-6Zs4RA:1uCtCx:uwvQQuAMDStWvnGtBI3R1GSEv_a9w-2xZDD4ozKXExI', '2025-05-22 04:50:07.643985'),
-('z4ykkxxqdesx64t4ki7o0ws5truqdfl4', '.eJylUMtymzAU_RevW0ZIYJvubEwInkiEBgNi45GEMC8b1zgDVqf_XtFmOu26i7u599zz-r44svd7dXwf5O1YF4svC7j49PeOM9HKy3woGnY59YboL_dbzY0ZYnxcBwP3hey2H9h_CCo2VPO3XC9t23FMZjucofUKFk4BYSFMWUjLRlyuHOSUiFsQlEtWQos7UqACCtssUWlpUiaEHIbjvdcimlE-9hX3RR3W--CgApPUwRBcvtrCDZZBe80Sd-8YGgQ4vHe8c4DMtl3Q9DVNSZNnRAX1WOdZNerdRFQEiaKINO3jxd1faRbVYeMhsqMw3HmPMNbk5ytgb5q8iWyisEViqogfjfkuMsOY1DT2ANlFI40poEpYebOxZo0iI53onGuujeELMPDrMjmMLosVDijkK95Z59LcPkeut5sge6rlDQE0vdgnT6e-yfImh-r_Y4tzctajmDtHSaz5AccC6CIs0mxsrK2y9An8qaM5Tfh3Hd8Kv9WCgUmhB_L0oAhMauxTEPrkTBvPwn5k5ilGJD0grE5m_stUovJsX7J0rlKbWqXVZ_QAjxDztliWAe_brdx07dS8ro92YY-H9C1_nvLWwosfPwEcqdzr:1uCtau:8_pzb1-oFeF2egQtOPLmEYF56SxIQfYhzqfOyrGz6Fg', '2025-05-22 05:14:52.451956');
+('lo7ee8x5hnshe24bv8173y9kl28buje9', '.eJylUMmSmzAQ_RefE4p9TG4eE7ugBjHYmEUXl5CEJfYxTDCayr9HVKZSyTmHvnS_rd_H5oreJ3Z9H-n9ysnm20bffPl7VyBc0249kAp1t17BfTfdeaGsEOXzOipBT2jz_In9R4Chka1surUty3E0ZDkFMrZPOnGIrhOsUUJNyyjok2M4pVGYulraqNTNwqHYIDq2tNIoTSmKMKbjeJ16aSIV6eKz4oh5yH3vIjwNcG_0upOF957t1UOW7H1HkSC10KemaByVZs-NV_U8T0EFMyA8PnOYsVnuHkBEOhC5BeJavOz9Ic8iHlbfDeDmeugGjzAORq8dVHSW4hWrYFWrubg8gninhW60gOpihS5sYRvM0N2peXybgzRpVw-SgQY3zgBlsKBTlfOrYbOHWe8sbLumHaF0KZftV6KR5p4IP2ODxWzo2zsRya_vtLzTkf3_27hNWjkC7SWhTcyVEMRYlUWYQNRWsMwcpQf1Tx3VTQS_63gjx1oaSrMUtOCYCyAaDmJPBXr0kHUyGBMOY9gAFy-5gBU4r6ESATO_ROlapQzV-056Opx_8MSfVHWqXl3MwLHzLi-V8Pl29rLiVB7e5v0wbn7-Aloy4Jo:1uCu5Z:aBPMcuJnAPQ5VvHVHwP1EKdL00eMjzh8J1v1YYBMq50', '2025-05-22 05:46:33.137045');
 
 -- --------------------------------------------------------
 
@@ -227,7 +227,7 @@ INSERT INTO `leave_balances` (`id`, `year`, `total_days`, `used_days`, `created_
 (2, 2025, 30, 0, '2025-05-08 04:29:03.897157', '2025-05-08 04:29:03.898163', 2, 1),
 (3, 2025, 12, 0, '2025-05-08 04:48:10.052878', '2025-05-08 04:48:10.052878', 1, 2),
 (4, 2025, 30, 0, '2025-05-08 04:48:10.055737', '2025-05-08 04:48:10.055737', 2, 2),
-(5, 2025, 12, 0, '2025-05-08 05:08:29.049546', '2025-05-08 05:08:29.049546', 1, 3),
+(5, 2025, 12, 1, '2025-05-08 05:08:29.049546', '2025-05-08 12:21:17.337592', 1, 3),
 (6, 2025, 30, 0, '2025-05-08 05:08:29.054182', '2025-05-08 05:08:29.054182', 2, 3),
 (7, 2025, 12, 0, '2025-05-08 05:14:03.268246', '2025-05-08 05:14:03.268246', 1, 4),
 (8, 2025, 30, 0, '2025-05-08 05:14:03.273119', '2025-05-08 05:14:03.273119', 2, 4);
@@ -249,6 +249,14 @@ CREATE TABLE `leave_requests` (
   `leave_type_id` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `leave_requests`
+--
+
+INSERT INTO `leave_requests` (`id`, `start_date`, `end_date`, `reason`, `status`, `created_at`, `updated_at`, `leave_type_id`, `user_id`) VALUES
+(1, '2025-05-10', '2025-05-10', 'gjhgjhgjhgdsjklfhsakfhkasjdhfjksdf', 'approved', '2025-05-08 12:17:33.465431', '2025-05-08 12:21:17.330694', 1, 3),
+(2, '2025-05-11', '2025-05-11', 'fgsdfgsdfgsdfgsdfg', 'pending', '2025-05-08 12:21:39.600239', '2025-05-08 12:21:39.600239', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -300,9 +308,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `date_joined`, `is_active`, `is_admin`) VALUES
-(1, 'pbkdf2_sha256$720000$sgryBrcFbzfp55gUlNV477$bl6l9jz5zjHdlcy4FYmziJbtfMiEsiFE4NvZutiXtZU=', '2025-05-08 05:06:03.958648', 1, 'test2', '', '', 'test2@gmail.com', 1, '2025-05-08 04:29:03.608301', 1, 0),
-(2, 'pbkdf2_sha256$720000$lS9CBzUU4uXtmjx29Auhtw$3iQyEfQpVVEJV/YcN91wvVEnSRuNUl6aMPxOC6jb7j8=', '2025-05-08 05:14:52.439770', 1, 'test', 'test', 'test', 'test@gmail.com', 1, '2025-05-08 04:48:08.637979', 1, 1),
-(3, 'pbkdf2_sha256$720000$VYXbpCPHQN5LQCydGdJUDg$ccx5oLZzvw2kWBiCM7de4XnxnlSXh9uBoBYNyj4nHts=', '2025-05-08 05:08:29.068527', 0, 'test3', 'test3', 'test3', 'test3@gmail.com', 0, '2025-05-08 05:08:27.870594', 0, 0),
+(1, 'pbkdf2_sha256$720000$sgryBrcFbzfp55gUlNV477$bl6l9jz5zjHdlcy4FYmziJbtfMiEsiFE4NvZutiXtZU=', '2025-05-08 05:41:47.290277', 1, 'test2', '', '', 'test2@gmail.com', 1, '2025-05-08 04:29:03.608301', 1, 0),
+(2, 'pbkdf2_sha256$720000$lS9CBzUU4uXtmjx29Auhtw$3iQyEfQpVVEJV/YcN91wvVEnSRuNUl6aMPxOC6jb7j8=', '2025-05-08 12:34:19.693180', 1, 'test', 'test', 'test', 'test@gmail.com', 1, '2025-05-08 04:48:08.637979', 1, 1),
+(3, 'pbkdf2_sha256$720000$VYXbpCPHQN5LQCydGdJUDg$ccx5oLZzvw2kWBiCM7de4XnxnlSXh9uBoBYNyj4nHts=', '2025-05-08 12:33:39.217571', 0, 'test3', 'test3', 'test3', 'test3@gmail.com', 0, '2025-05-08 05:08:27.870594', 1, 0),
 (4, 'pbkdf2_sha256$720000$LL3uy1J1XYuu9YNh9eHrSg$7YXTTxOBG5aJl00IC4EgWehOMfGAzUtABBuKKPTKpQE=', '2025-05-08 05:14:03.286583', 0, 'test4', 'test4', 'test4', 'test4@gmail.com', 0, '2025-05-08 05:14:01.746322', 0, 0);
 
 -- --------------------------------------------------------
@@ -478,7 +486,7 @@ ALTER TABLE `leave_balances`
 -- AUTO_INCREMENT for table `leave_requests`
 --
 ALTER TABLE `leave_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `leave_types`

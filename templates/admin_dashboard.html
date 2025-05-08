@@ -103,8 +103,14 @@
                                     <td>{{ req.start_date }}</td>
                                     <td>{{ req.end_date }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-success btn-sm">Approve</a>
-                                        <a href="#" class="btn btn-danger btn-sm">Reject</a>
+                                        <form method="post" action="{% url 'approve_leave' req.id %}" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        </form>
+                                        <form method="post" action="{% url 'reject_leave' req.id %}" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {% endfor %}

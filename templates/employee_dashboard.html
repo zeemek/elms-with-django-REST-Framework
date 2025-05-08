@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header">Employee Profile</div>
+            <div class="card-body">
+                <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Role:</strong> Employee</p>
+                <p><strong>Status:</strong> 
+                    {% if user.is_active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <h2>Employee Dashboard</h2>
+        <div class="card mb-4">
+            <div class="card-header">Leave Balances</div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Leave Type</th>
+                            <th>Balance</th>
+                            <th>Maximum Days</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lb in leave_balances %}
+                        <tr>
+                            <td>{{ lb.leave_type }}</td>
+                            <td>{{ lb.balance }}</td>
+                            <td>{{ lb.max_days }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">Apply for Leave</div>
+            <div class="card-body">
+                <form method="post" action="{% url 'submit_leave' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="leave_type" class="form-label">Leave Type</label>
+                        <select class="form-select" id="leave_type" name="leave_type" required>
+                            {% for lt in leave_types %}
+                                <option value="{{ lt.id }}">{{ lt.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Reason</label>
+                        <textarea class="form-control" id="reason" name="reason" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Leave Request</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Leave History</div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Leave Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lh in leave_history %}
+                        <tr>
+                            <td>{{ lh.leave_type }}</td>
+                            <td>{{ lh.start_date }}</td>
+                            <td>{{ lh.end_date }}</td>
+                            <td>
+                                {% if lh.status == 'approved' %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% elif lh.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ lh.reason }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

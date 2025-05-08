@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from api.views import welcome, login_view, register_view, logout_view, activate_user, deactivate_user
+from api.views import employee_dashboard, submit_leave_request
+from api.views import approve_leave_request, reject_leave_request
 
 urlpatterns = [
     path('', welcome, name='welcome'),
@@ -27,4 +29,8 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('activate-user/<int:user_id>/', activate_user, name='activate_user'),
     path('deactivate-user/<int:user_id>/', deactivate_user, name='deactivate_user'),
+    path('dashboard/', employee_dashboard, name='employee_dashboard'),
+    path('submit-leave/', submit_leave_request, name='submit_leave'),
+    path('approve-leave/<int:leave_id>/', approve_leave_request, name='approve_leave'),
+    path('reject-leave/<int:leave_id>/', reject_leave_request, name='reject_leave'),
 ]
