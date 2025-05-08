@@ -71,3 +71,13 @@ python manage.py runserver
 - GET /api/admin/users/ - List all users
 - PUT /api/admin/users/{id}/activate/ - Activate user
 - GET /api/admin/reports/ - Generate reports 
+
+
+##
+username: test
+password: test123
+email: test@gmail.com    role: admin
+
+test2   laidaba123
+test3   test123 
+test4   test123
