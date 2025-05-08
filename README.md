@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ```
 
 3. Configure database:
-- Create a MySQL database named 'leave_management_system'
+- Create a MySQL database named 'elms'
 - Update database settings in settings.py if needed
 
 4. Run migrations:
