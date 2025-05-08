@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Employee Leave Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group mb-4">
+            <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
+            <a href="#" class="list-group-item list-group-item-action">Request Leave</a>
+            <a href="#" class="list-group-item list-group-item-action">Manage Leave Types</a>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <h2>Welcome, Admin</h2>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Leave Balances</span>
+                        <a href="#" class="btn btn-primary btn-sm">Request Leave</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Total Days</th>
+                                    <th>Used Days</th>
+                                    <th>Remaining</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for balance in leave_balances %}
+                                <tr>
+                                    <td>{{ balance.leave_type }}</td>
+                                    <td>{{ balance.total_days }}</td>
+                                    <td>{{ balance.used_days }}</td>
+                                    <td>{{ balance.remaining }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">My Leave Requests</div>
+                    <div class="card-body p-0">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for req in my_leave_requests %}
+                                <tr>
+                                    <td>{{ req.leave_type }}</td>
+                                    <td>{{ req.start_date }}</td>
+                                    <td>{{ req.end_date }}</td>
+                                    <td>
+                                        {% if req.status == 'approved' %}
+                                            <span class="badge bg-success">Approved</span>
+                                        {% elif req.status == 'pending' %}
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Rejected</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">Pending Leave Requests</div>
+                    <div class="card-body p-0">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Leave Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for req in pending_leave_requests %}
+                                <tr>
+                                    <td>{{ req.employee }}</td>
+                                    <td>{{ req.leave_type }}</td>
+                                    <td>{{ req.start_date }}</td>
+                                    <td>{{ req.end_date }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-success btn-sm">Approve</a>
+                                        <a href="#" class="btn btn-danger btn-sm">Reject</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">All Employees</div>
+                    <div class="card-body p-0">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for emp in employees %}
+                                <tr>
+                                    <td>{{ emp.name }}</td>
+                                    <td>{{ emp.email }}</td>
+                                    <td>
+                                        {% if emp.status == 'active' %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% elif emp.status == 'pending' %}
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if emp.status == 'active' %}
+                                            <a href="{% url 'deactivate_user' emp.id %}" class="btn btn-warning btn-sm">Deactivate</a>
+                                        {% else %}
+                                            <a href="{% url 'activate_user' emp.id %}" class="btn btn-success btn-sm">Activate</a>
+                                        {% endif %}
+                                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
