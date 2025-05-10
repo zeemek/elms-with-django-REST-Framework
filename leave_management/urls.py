@@ -19,6 +19,7 @@ from django.urls import path, include
 from api.views import welcome, login_view, register_view, logout_view, activate_user, deactivate_user
 from api.views import employee_dashboard, submit_leave_request
 from api.views import approve_leave_request, reject_leave_request
+from api.views import delete_employee
 
 urlpatterns = [
     path('', welcome, name='welcome'),
@@ -33,4 +34,5 @@ urlpatterns = [
     path('submit-leave/', submit_leave_request, name='submit_leave'),
     path('approve-leave/<int:leave_id>/', approve_leave_request, name='approve_leave'),
     path('reject-leave/<int:leave_id>/', reject_leave_request, name='reject_leave'),
+    path('delete-employee/<int:user_id>/', delete_employee, name='delete_employee'),
 ]

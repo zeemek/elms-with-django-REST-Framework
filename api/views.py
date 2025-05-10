@@ -315,7 +315,9 @@ def approve_leave_request(request, leave_id):
             leave_type=leave_request.leave_type,
             year=leave_request.start_date.year
         )
-        leave_balance.used_days += 1
+        # Calculate number of days requested (inclusive)
+        days_requested = (leave_request.end_date - leave_request.start_date).days + 1
+        leave_balance.used_days += days_requested
         leave_balance.save()
         messages.success(request, 'Leave request approved.')
     return redirect('welcome')
@@ -329,4 +331,13 @@ def reject_leave_request(request, leave_id):
         leave_request.status = 'rejected'
         leave_request.save()
         messages.success(request, 'Leave request rejected.')
+    return redirect('welcome')
+
+@require_POST
+def delete_employee(request, user_id):
+    if not request.user.is_authenticated or not getattr(request.user, 'is_admin', False):
+        return redirect('login')
+    employee = get_object_or_404(User, id=user_id)
+    employee.delete()
+    messages.success(request, f'Employee {employee.username} deleted.')
     return redirect('welcome')

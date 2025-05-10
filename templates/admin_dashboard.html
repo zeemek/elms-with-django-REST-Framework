@@ -155,7 +155,10 @@
                                             <a href="{% url 'activate_user' emp.id %}" class="btn btn-success btn-sm">Activate</a>
                                         {% endif %}
                                         <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                        <form method="post" action="{% url 'delete_employee' emp.id %}" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {% endfor %}
