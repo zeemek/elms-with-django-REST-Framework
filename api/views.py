@@ -51,6 +51,21 @@ def welcome(request):
             }
             for lr in LeaveRequest.objects.filter(status='pending')
         ]
+        # All Leave Requests (for admin view)
+        all_leave_requests = [
+            {
+                'employee': lr.user.username,
+                'leave_type': lr.leave_type.name,
+                'start_date': lr.start_date.strftime('%b %d, %Y'),
+                'end_date': lr.end_date.strftime('%b %d, %Y'),
+                'duration': (lr.end_date - lr.start_date).days + 1,
+                'reason': lr.reason,
+                'status': lr.status,
+                'applied_on': lr.created_at.strftime('%b %d, %Y %H:%M'),
+                'id': lr.id,
+            }
+            for lr in LeaveRequest.objects.all().order_by('-created_at')
+        ]
         # All Employees
         employees = [
             {
@@ -65,6 +80,7 @@ def welcome(request):
             'leave_balances': leave_balances,
             'my_leave_requests': my_leave_requests,
             'pending_leave_requests': pending_leave_requests,
+            'all_leave_requests': all_leave_requests,
             'employees': employees,
         })
     elif user.is_authenticated:

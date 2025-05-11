@@ -120,6 +120,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-3">
@@ -159,6 +160,55 @@
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">Recent Leave Requests</div>
+                    <div class="card-body p-0">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Leave Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Duration</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Applied On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for req in all_leave_requests %}
+                                <tr>
+                                    <td>{{ req.employee }}</td>
+                                    <td>{{ req.leave_type }}</td>
+                                    <td>{{ req.start_date }}</td>
+                                    <td>{{ req.end_date }}</td>
+                                    <td>{{ req.duration }} days</td>
+                                    <td>{{ req.reason }}</td>
+                                    <td>
+                                        {% if req.status == 'approved' %}
+                                            <span class="badge bg-success">Approved</span>
+                                        {% elif req.status == 'pending' %}
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Rejected</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ req.applied_on }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-info btn-sm">View</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
