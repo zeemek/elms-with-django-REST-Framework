@@ -6,8 +6,9 @@
 <div class="row">
     <div class="col-md-2">
         <div class="list-group mb-4">
-            <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
-            
+            <a href="#dashboard" class="list-group-item list-group-item-action active" data-section="dashboard">Dashboard</a>
+            <a href="#all-employees" class="list-group-item list-group-item-action" data-section="all-employees">All Employees</a>
+            <a href="#recent-leaves" class="list-group-item list-group-item-action" data-section="recent-leaves">Recent Leave Requests</a>
         </div>
     </div>
     <div class="col-md-10">
@@ -24,140 +25,147 @@
         </div>
         {% endif %}
 
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-header">Pending Leave Requests</div>
-                    <div class="card-body p-0">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Employee</th>
-                                    <th>Leave Type</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for req in pending_leave_requests %}
-                                <tr>
-                                    <td>{{ req.employee }}</td>
-                                    <td>{{ req.leave_type }}</td>
-                                    <td>{{ req.start_date }}</td>
-                                    <td>{{ req.end_date }}</td>
-                                    <td>
-                                        <form method="post" action="{% url 'approve_leave' req.id %}" style="display:inline;">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                        </form>
-                                        <form method="post" action="{% url 'reject_leave' req.id %}" style="display:inline;">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+        <div id="dashboard" class="section">
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-header">Pending Leave Requests</div>
+                        <div class="card-body p-0">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Leave Type</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for req in pending_leave_requests %}
+                                    <tr>
+                                        <td>{{ req.employee }}</td>
+                                        <td>{{ req.leave_type }}</td>
+                                        <td>{{ req.start_date }}</td>
+                                        <td>{{ req.end_date }}</td>
+                                        <td>
+                                            <form method="post" action="{% url 'approve_leave' req.id %}" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
+                                            <form method="post" action="{% url 'reject_leave' req.id %}" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-header">All Employees</div>
-                    <div class="card-body p-0">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for emp in employees %}
-                                <tr>
-                                    <td>{{ emp.name }}</td>
-                                    <td>{{ emp.email }}</td>
-                                    <td>
-                                        {% if emp.status == 'active' %}
-                                            <span class="badge bg-success">Active</span>
-                                        {% elif emp.status == 'pending' %}
-                                            <span class="badge bg-warning text-dark">Pending</span>
-                                        {% else %}
-                                            <span class="badge bg-danger">Inactive</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if emp.status == 'active' %}
-                                            <a href="{% url 'deactivate_user' emp.id %}" class="btn btn-warning btn-sm">Deactivate</a>
-                                        {% else %}
-                                            <a href="{% url 'activate_user' emp.id %}" class="btn btn-success btn-sm">Activate</a>
-                                        {% endif %}
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEmployeeModal{{ emp.id }}">Edit</button>
-                                        <form method="post" action="{% url 'delete_employee' emp.id %}" style="display:inline;">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+        <div id="all-employees" class="section">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-header">All Employees</div>
+                        <div class="card-body p-0">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for emp in employees %}
+                                    <tr>
+                                        <td>{{ emp.name }}</td>
+                                        <td>{{ emp.email }}</td>
+                                        <td>
+                                            {% if emp.status == 'active' %}
+                                                <span class="badge bg-success">Active</span>
+                                            {% elif emp.status == 'pending' %}
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Inactive</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if emp.status == 'active' %}
+                                                <a href="{% url 'deactivate_user' emp.id %}" class="btn btn-warning btn-sm">Deactivate</a>
+                                            {% else %}
+                                                <a href="{% url 'activate_user' emp.id %}" class="btn btn-success btn-sm">Activate</a>
+                                            {% endif %}
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEmployeeModal{{ emp.id }}">Edit</button>
+                                            <form method="post" action="{% url 'delete_employee' emp.id %}" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-header">Recent Leave Requests</div>
-                    <div class="card-body p-0">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Employee</th>
-                                    <th>Leave Type</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Duration</th>
-                                    <th>Reason</th>
-                                    <th>Status</th>
-                                    <th>Applied On</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for req in all_leave_requests %}
-                                <tr>
-                                    <td>{{ req.employee }}</td>
-                                    <td>{{ req.leave_type }}</td>
-                                    <td>{{ req.start_date }}</td>
-                                    <td>{{ req.end_date }}</td>
-                                    <td>{{ req.duration }} days</td>
-                                    <td>{{ req.reason }}</td>
-                                    <td>
-                                        {% if req.status == 'approved' %}
-                                            <span class="badge bg-success">Approved</span>
-                                        {% elif req.status == 'pending' %}
-                                            <span class="badge bg-warning text-dark">Pending</span>
-                                        {% else %}
-                                            <span class="badge bg-danger">Rejected</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ req.applied_on }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#leaveDetailsModal{{ req.id }}">View</button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+
+        <div id="recent-leaves" class="section">
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-header">Recent Leave Requests</div>
+                        <div class="card-body p-0">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Leave Type</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Duration</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th>Applied On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for req in all_leave_requests %}
+                                    <tr>
+                                        <td>{{ req.employee }}</td>
+                                        <td>{{ req.leave_type }}</td>
+                                        <td>{{ req.start_date }}</td>
+                                        <td>{{ req.end_date }}</td>
+                                        <td>{{ req.duration }} days</td>
+                                        <td>{{ req.reason }}</td>
+                                        <td>
+                                            {% if req.status == 'approved' %}
+                                                <span class="badge bg-success">Approved</span>
+                                            {% elif req.status == 'pending' %}
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Rejected</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ req.applied_on }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#leaveDetailsModal{{ req.id }}">View</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -275,4 +283,44 @@
     </div>
 </div>
 {% endfor %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all navigation links
+    const navLinks = document.querySelectorAll('.list-group-item');
+    
+    // Function to handle navigation
+    function handleNavigation(e) {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        navLinks.forEach(link => link.classList.remove('active'));
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        // Get the target section
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        // Smooth scroll to the section
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Add click event listener to all navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', handleNavigation);
+    });
+    
+    // Handle initial active state based on URL hash
+    const hash = window.location.hash || '#dashboard';
+    const activeLink = document.querySelector(`[href="${hash}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
+        document.querySelector(hash).scrollIntoView();
+    }
+});
+</script>
+{% endblock %}
 {% endblock %} 
