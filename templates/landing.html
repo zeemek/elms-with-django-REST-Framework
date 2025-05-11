@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Employee Leave Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-5">
+            <h1 class="display-4 mb-4">Welcome to Employee Leave Management System</h1>
+            <p class="lead">Streamline your leave management process with our comprehensive solution</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Easy Leave Requests</h3>
+                    <p class="card-text">Submit and track your leave requests with just a few clicks. Get instant updates on your request status.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Leave Balance Tracking</h3>
+                    <p class="card-text">Keep track of your available leave days and plan your time off accordingly.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Admin Dashboard</h3>
+                    <p class="card-text">Comprehensive admin tools to manage employee leave requests and monitor leave balances.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h2 class="mb-4">Get Started Today</h2>
+            <p class="mb-4">Join our platform to experience hassle-free leave management</p>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg me-md-2">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

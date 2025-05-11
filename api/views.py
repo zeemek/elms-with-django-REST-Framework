@@ -86,7 +86,7 @@ def welcome(request):
     elif user.is_authenticated:
         return redirect('employee_dashboard')
     else:
-        return render(request, 'base.html')
+        return render(request, 'landing.html')
 
 def login_view(request):
     if request.method == 'POST':
