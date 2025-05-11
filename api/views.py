@@ -72,6 +72,8 @@ def welcome(request):
                 'id': u.id,
                 'name': u.username,
                 'email': u.email,
+                'first_name': u.first_name,
+                'last_name': u.last_name,
                 'status': 'active' if u.is_active else 'pending',
             }
             for u in User.objects.exclude(is_admin=True)
@@ -356,4 +358,52 @@ def delete_employee(request, user_id):
     employee = get_object_or_404(User, id=user_id)
     employee.delete()
     messages.success(request, f'Employee {employee.username} deleted.')
+    return redirect('welcome')
+
+@require_POST
+def update_employee(request, user_id):
+    if not request.user.is_authenticated or not getattr(request.user, 'is_admin', False):
+        return redirect('login')
+    
+    try:
+        employee = User.objects.get(id=user_id)
+        
+        # Get form data
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        
+        # Check if username is already taken by another user
+        if User.objects.exclude(id=user_id).filter(username=username).exists():
+            messages.error(request, 'Username is already taken.')
+            return redirect('welcome')
+        
+        # Check if email is already taken by another user
+        if User.objects.exclude(id=user_id).filter(email=email).exists():
+            messages.error(request, 'Email is already taken.')
+            return redirect('welcome')
+        
+        # Update user details
+        employee.username = username
+        employee.email = email
+        employee.first_name = first_name
+        employee.last_name = last_name
+        
+        # Update password if provided
+        if new_password:
+            if new_password != confirm_password:
+                messages.error(request, 'Passwords do not match.')
+                return redirect('welcome')
+            employee.set_password(new_password)
+        
+        employee.save()
+        messages.success(request, f'Employee {username} details updated successfully.')
+    except User.DoesNotExist:
+        messages.error(request, 'Employee not found.')
+    except Exception as e:
+        messages.error(request, f'Error updating employee: {str(e)}')
+    
     return redirect('welcome')
